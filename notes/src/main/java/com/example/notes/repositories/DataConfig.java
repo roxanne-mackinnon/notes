@@ -25,10 +25,8 @@ public class DataConfig {
         return args -> {
             noteRepo.deleteAll();            
             userRepo.deleteAll();
-            User roxanne = userRepo.save(new User("roxanne", "Horsecredentials5!69420"));
             User amanda = userRepo.save(new User("amanda", "Biteme!"));
             User manny = userRepo.save(new User("manny", ""));
-            noteRepo.save(new Note(roxanne.getId(), "my first note'", "I love my girlfriend amanda!"));
             noteRepo.save(new Note(amanda.getId(), "im cute", "im the cutest cutie who ever cutied"));
             noteRepo.save(new Note(manny.getId(), "my hobbies", "taking my couple friends to strip clubs"));
         };
