@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/">
+    <head>
+        <title>Notes App</title>
+    </head>
+    <body>
+        <h1>Create a note!</h1>
+        <a th:href="@{/home}">Return to home</a>
+        <form method="POST" th:action="@{/create}" th:object="${note}">
+            <input type="text" th:field="*{title}" placeholder="Title" />
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('title')}"
+                  th:errors="*{title}">Validation Error</span> </br>
+            <input type="text" th:field="*{content}" placeholder="Content" />
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('content')}"
+                  th:errors="*{content}">Validation Error</span> </br>
+            <input type="submit" value="Create Note" />
+        </form>
+    </body>
+</html>
