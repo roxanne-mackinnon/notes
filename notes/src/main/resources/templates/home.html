@@ -8,10 +8,10 @@
         <link rel="stylesheet" th:href="@{/home.css}"/>
     </head>
     <body>
-        <h1>Welcome to the homepage!</h1>
-        <div id="noteList" th:object="${notes}">
+        <h1>Welcome, <span th:text="${user.username}">!</h1>
+        <div class="noteList" th:object="${notes}">
             <ul>
-                <li th:each="note : ${notes}">
+                <li class="noteElem" th:each="note : ${notes}">
                     <span th:text="${note.title}">Title</span></br>
                     <span th:text="${note.content}">Content</span></br>
                 </li>

@@ -6,5 +6,6 @@ import com.example.notes.models.User;
 
 
 public interface UserRepository 
-        extends CrudRepository<User, String>{
+        extends CrudRepository<User, Long> {
+        User findByUsername(String username);
 }
