@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.notes.models.Note;
 import com.example.notes.models.User;
 import com.example.notes.repositories.NoteRepository;
-import com.example.notes.repositories.UserRepository;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +25,11 @@ public class CreateController {
     @Autowired
     private NoteRepository notes;
     
+    @ModelAttribute(name = "note")
+    public Note newNote() {
+        return new Note();
+    }
+    
     @GetMapping
     public String create() {
         return "create";
@@ -35,7 +38,6 @@ public class CreateController {
     @PostMapping
     public String postNote(Model model, @AuthenticationPrincipal User user,
                        @Valid Note note, Errors errors) {
-
         if (errors.hasErrors()) {
             return "create";
         }
@@ -43,9 +45,5 @@ public class CreateController {
         notes.save(new Note(user.getId(), note.getTitle(), note.getContent()));
         return "redirect:/home";
     }
-
-    @ModelAttribute(name = "note")
-    public Note newNote() {
-        return new Note();
-    }
+    
 }

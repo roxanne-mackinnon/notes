@@ -3,6 +3,7 @@ package com.example.notes.controllers;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,15 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class HomeController {
 
+    @Autowired
     private NoteRepository noteRepository;
 
     private List<Note> notes = new Vector<>();
 
     private User user;
-
-    public HomeController(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
-    }
 
     @GetMapping("/home")
     public String getAltHome(@AuthenticationPrincipal User user, Model model) {
@@ -51,4 +49,5 @@ public class HomeController {
             notes.add(note);
         }
     }
+    
 }

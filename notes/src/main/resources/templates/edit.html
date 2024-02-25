@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/">
+    <head>
+        <title>Edit Note</title>
+    </head>
+    <body>
+        <form method="POST" th:action="@{/edit/{id}(id = ${currentNote.id})}" th:object="${currentNote}">
+            <label for="title">Title: </label>
+            <input name="title" type="text" th:field="*{title}" th:value="*{title}"/> </br>
+
+            <label for="content">Content: </label>
+            <input name="title" type="text" th:field="*{content}" th:value="*{content}"/> </br>
+
+            <input type="submit" value="Save Changes"/>
+        </form>
+    </body>
+</html>

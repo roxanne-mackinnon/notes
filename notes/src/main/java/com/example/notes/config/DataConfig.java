@@ -26,17 +26,4 @@ public class DataConfig {
     @Autowired
     private PasswordEncoder encoder;
     
-    @Bean
-    public CommandLineRunner userLoader() {
-        return args -> {
-            User user1 = new User("exampleUser1", encoder.encode("p@ssw0rd"));
-            User user2 = new User("admin", encoder.encode("admin"));
-            userRepo.save(user1);
-            userRepo.save(user2);
-
-            noteRepo.save(new Note(user1.getId(), "title", "personal note from exampleUser1"));
-            noteRepo.save(new Note(user2.getId(), "admin post", "content of admin post"));
-        };
-    }   
-    
 }
