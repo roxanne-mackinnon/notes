@@ -1,14 +1,12 @@
 package com.example.notes.controllers;
 
-import java.util.List;
-import java.util.Vector;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.notes.models.Note;
 import com.example.notes.models.User;
@@ -25,29 +23,50 @@ public class HomeController {
     @Autowired
     private NoteRepository noteRepository;
 
-    private List<Note> notes = new Vector<>();
+    @Autowired
+    private UserRepository userRepository;
 
-    private User user;
+    @ModelAttribute("noteCount")
+    public Long noteCount() {
+        return noteRepository.count();
+    }
 
-    @GetMapping("/home")
-    public String getAltHome(@AuthenticationPrincipal User user, Model model) {
-        return home(user, model);
+    @ModelAttribute("userCount")
+    public Long userCount() {
+        return userRepository.count();
     }
 
     @GetMapping("/")
-    public String home(@AuthenticationPrincipal User user, Model model) {
-        this.user = user;
+    public String home() {
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
+    public String getHome(@AuthenticationPrincipal User user,
+                          Model model) {
+
+        Iterable<Note> notes = noteRepository.findByUserId(user.getId());
+        model.addAttribute("notes", notes);
         model.addAttribute("user", user);
-        fetchNotes(user.getId());
-        model.addAttribute("notes",notes);
+
         return "home";
     }
 
-    private void fetchNotes(Long userId) {
-        notes.clear();
-        for (Note note : noteRepository.findByUserId(userId)) {
-            notes.add(note);
-        }
-    }
     
+    @GetMapping("/delete/{id}")
+    public String deleteNote(@AuthenticationPrincipal User user,
+                            @PathVariable("id") Long noteId,
+                            Model model) throws Exception {
+        // if note does not exist, throw a tantrum
+        Note note = noteRepository.findById(noteId).orElseThrow();
+        if (note.getUserId().equals(user.getId())) {
+            noteRepository.deleteById(noteId);
+        }
+        else {
+            throw new Exception("User not authorized to delete note.");
+        }
+
+        return "redirect:/home";
+    }
+
 }

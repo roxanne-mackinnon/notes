@@ -1,16 +1,17 @@
-.noteList {
+.note-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.ul.no-bullets {
+ul.no-bullets {
     list-style-type: none;
     margin: 0;
-    padding: 0; 
+    padding: 0;
 }
 
-.noteElem {
+
+.note-element {
     margin: 2px;
     padding: 5px;
     background-color: gainsboro;

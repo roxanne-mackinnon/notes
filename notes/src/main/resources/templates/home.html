@@ -8,14 +8,18 @@
         <link rel="stylesheet" th:href="@{/home.css}"/>
     </head>
     <body>
-        <h1>Welcome, <span th:text="${user.username}">!</h1>        
-        <div class="noteList" th:object="${notes}">
-            <ul>
-                <li class="noteElem" th:each="note : ${notes}">
-                    <a th:href="@{/edit/{id}(id = ${note.id})}">
-                        <span th:text="${note.title}">Title</span></br>
-                        <span th:text="${note.content}">Content</span></br>
-                    </a>
+        <h1>Welcome, <span th:text="${user.username}">!</h1>
+        <h3>Notes App has <span th:text="${userCount}">0</span> total users and <span th:text="${noteCount}">0</span> total notes.</h3>
+        <div class="note-list" th:object="${notes}">
+            <ul class="no-bullets">
+                <li th:each="note : ${notes}">
+                    <div class="note-element">
+                        <a th:href="@{/edit/{id}(id = ${note.id})}">
+                            <span th:text="${note.title}">Title</span></br>
+                            <span th:text="${note.content}">Content</span></br>
+                        </a>
+                        <a th:href="@{/delete/{id}(id = ${note.id})}">Delete note</a>
+                    </div>
                 </li>
             </ul>
         </div>
