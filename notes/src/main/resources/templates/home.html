@@ -6,10 +6,13 @@
             Notes App
         </title>
         <link rel="stylesheet" th:href="@{/home.css}"/>
+        <script defer th:src="@{/home.js}"></script>
     </head>
     <body>
         <h1>Welcome, <span th:text="${user.username}">!</h1>
         <h3>Notes App has <span th:text="${userCount}">0</span> total users and <span th:text="${noteCount}">0</span> total notes.</h3>
+        
+        <p>Server side rendering</p>
         <div class="note-list" th:object="${notes}">
             <ul class="no-bullets">
                 <li th:each="note : ${notes}">
@@ -18,9 +21,15 @@
                             <span th:text="${note.title}">Title</span></br>
                             <span th:text="${note.content}">Content</span></br>
                         </a>
-                        <a th:href="@{/delete/{id}(id = ${note.id})}">Delete note</a>
+                        <button th:onclick="'deleteNote('+${note.id}+')'">Delete note</button>
                     </div>
                 </li>
+            </ul>
+        </div>
+
+        <p>Reactive client</p>
+        <div class="note-list" id="noteList">
+            <ul class="no-bullets" id="noteListUl">
             </ul>
         </div>
         <a th:href="@{/create}">Create a note</a>

@@ -46,27 +46,11 @@ public class HomeController {
                           Model model) {
 
         Iterable<Note> notes = noteRepository.findByUserId(user.getId());
-        model.addAttribute("notes", notes);
+        model.addAttribute("notes", notes);                            
         model.addAttribute("user", user);
+        
 
         return "home";
-    }
-
-    
-    @GetMapping("/delete/{id}")
-    public String deleteNote(@AuthenticationPrincipal User user,
-                            @PathVariable("id") Long noteId,
-                            Model model) throws Exception {
-        // if note does not exist, throw a tantrum
-        Note note = noteRepository.findById(noteId).orElseThrow();
-        if (note.getUserId().equals(user.getId())) {
-            noteRepository.deleteById(noteId);
-        }
-        else {
-            throw new Exception("User not authorized to delete note.");
-        }
-
-        return "redirect:/home";
     }
 
 }
